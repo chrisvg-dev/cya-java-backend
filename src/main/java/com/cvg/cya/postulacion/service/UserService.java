@@ -1,18 +1,18 @@
 package com.cvg.cya.postulacion.service;
 
 import com.cvg.cya.postulacion.models.dto.UserDto;
-import com.cvg.cya.postulacion.models.entity.Users;
+import com.cvg.cya.postulacion.models.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
-    Users save(Users save);
-    Users update(Long id, UserDto save);
-    Optional<Users> findById(Long id);
-    Optional<Users> findByEmail(String email);
-    List<Users> findAll();
+    User save(User save);
+    User update(Long id, UserDto save);
+    Optional<User> findById(Long id);
+    Optional<User> findByEmail(String email);
+    List<User> findAll();
     void deleteById(Long id);
 
     /**
@@ -23,5 +23,5 @@ public interface UserService extends UserDetailsService {
 
 
     boolean existsByEmailAndPassword(String email, String password);
-    Optional<Users> findByEmailAndPassword(String email, String password);
+    Optional<User> findByEmailAndPassword(String email, String password);
 }

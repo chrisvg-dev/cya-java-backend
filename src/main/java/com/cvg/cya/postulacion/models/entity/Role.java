@@ -20,7 +20,7 @@ public class Role {
     @NotBlank
     private String rolName;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "menu_rol",
             joinColumns = @JoinColumn(name = "fk_rol", referencedColumnName = "id"),

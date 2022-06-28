@@ -3,14 +3,13 @@ package com.cvg.cya.postulacion.controller;
 import com.cvg.cya.postulacion.models.dto.LoginDto;
 import com.cvg.cya.postulacion.models.dto.UserDto;
 import com.cvg.cya.postulacion.models.entity.Role;
-import com.cvg.cya.postulacion.models.entity.Users;
+import com.cvg.cya.postulacion.models.entity.User;
 import com.cvg.cya.postulacion.service.RoleService;
 import com.cvg.cya.postulacion.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,7 +64,7 @@ public class UserController {
                 .map( item -> this.roleService.findById(item).orElseThrow() )
                 .collect(Collectors.toSet());
 
-        Users user = new Users();
+        User user = new User();
         user.setRoles( roles );
         user.setName( dto.getName() );
         user.setLastName( dto.getLastName() );
@@ -87,7 +85,7 @@ public class UserController {
             if (!exists) return ResponseEntity.badRequest().body(
                     Collections.singletonMap("message", "El usuario no existe")
             );
-            Users user = this.userService.findByEmail( dto.getEmail()).orElseThrow();
+            User user = this.userService.findByEmail( dto.getEmail()).orElseThrow();
 
             if ( !(passwordEncoder.matches(dto.getPassword(), user.getPassword())) )
                 return ResponseEntity.badRequest().body(

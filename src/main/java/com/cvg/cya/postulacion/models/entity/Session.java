@@ -19,7 +19,7 @@ public class Session {
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    private Users user;
+    private User user;
 
     private LocalDateTime dateLogin;
     private Long time;

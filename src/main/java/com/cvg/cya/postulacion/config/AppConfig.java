@@ -1,5 +1,6 @@
 package com.cvg.cya.postulacion.config;
 
+import com.cvg.cya.postulacion.service.UserService;
 import com.cvg.cya.postulacion.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AppConfig extends WebSecurityConfigurerAdapter {
-    @Autowired private UserServiceImpl userService;
+    @Autowired private UserService userService;
 
     /**
      * DEFINIMOS EL BEAN PARA PODER INYECTAR PASSWORD ENCODER CON EL HASH BCRYPT Y ASIGNARSELO A LA CLAVE DE AUTENTICACION
@@ -43,15 +44,11 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/app/register**", "/js/**", "/css/**", "/img/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/roles").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/register**", "/js/**", "/css/**", "/img/**").permitAll()
+                .antMatchers("/api/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
