@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,11 @@ public class MenuController {
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody MenuDto menuDto, BindingResult result) {
         if (result.hasErrors()) return Resources.validate(result);
+
+        boolean exists = this.menuService.existsByNameOrPath( menuDto.getName(), menuDto.getPath() );
+        if (exists) return ResponseEntity.badRequest().body(
+                Collections.singletonMap("message", "El menú ya está registrado")
+        );
 
         UserMenu menu = new UserMenu();
         menu.setName( menuDto.getName() );

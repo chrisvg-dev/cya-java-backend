@@ -12,4 +12,9 @@ public interface MenuService {
     Optional<UserMenu> findById(Long id);
     List<UserMenu> findAll();
     void deleteById(Long id);
+
+
+
+
+    boolean existsByNameOrPath(String name, String path);
 }

@@ -17,15 +17,24 @@ public class PageController {
     public String login() {
         return "auth/login";
     }
-    @GetMapping("/menu")
-    public String menu() {
-        return "dashboard/menu";
-    }
     @GetMapping("/register")
     public String register() {
         return "auth/register";
     }
-    @GetMapping({"", "/home"})
+
+    @GetMapping("/menu")
+    public String menu() {
+        return "dashboard/menu.template";
+    }
+    @GetMapping("/roles")
+    public String roles() {
+        return "dashboard/roles.template";
+    }
+    @GetMapping("/users")
+    public String users() {
+        return "dashboard/users.template";
+    }
+    @GetMapping({"/", "/home"})
     public String home() {
         return "dashboard/home";
     }

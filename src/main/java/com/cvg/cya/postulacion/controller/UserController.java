@@ -59,6 +59,10 @@ public class UserController {
         if ( existsByEmail ) return ResponseEntity.badRequest().body(
                 Collections.singletonMap("message", "El email ya esta registrado...")
         );
+        LOG.info( dto.getRoles().isEmpty() + "" );
+        if ( dto.getRoles().isEmpty() && dto.getRoles().size() > 0 ) return ResponseEntity.badRequest().body(
+                Collections.singletonMap("message", "Debe agregar roles al usuario...")
+        );
 
         Set<Role> roles = dto.getRoles().stream()
                 .map( item -> this.roleService.findById(item).orElseThrow() )
@@ -75,7 +79,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body( this.userService.save(user) );
     }
 
-    @PostMapping("/login")
+    /**@PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto dto, BindingResult result) {
         try {
             if (result.hasErrors()) return Resources.validate(result);
@@ -98,5 +102,5 @@ public class UserController {
                     Collections.singletonMap("message", e.getMessage())
             );
         }
-    }
+    }*/
 }

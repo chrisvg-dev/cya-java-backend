@@ -47,4 +47,9 @@ public class MenuServiceImpl implements MenuService {
     public void deleteById(Long id) {
         this.deleteById(id);
     }
+
+    @Override
+    public boolean existsByNameOrPath(String name, String path) {
+        return this.repository.existsByNameOrPath(name, path);
+    }
 }
