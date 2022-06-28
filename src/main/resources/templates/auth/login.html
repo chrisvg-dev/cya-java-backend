@@ -1,0 +1,47 @@
+<!doctype html>
+<head th:replace="layout::head"></head>
+<body>
+    <head th:replace="layout::nav"></head>
+    <div class="container">
+        <div class="mt-5 col-md-5">
+            <form id="fUsers">
+                <div class="mb-3">
+                   <input type="email" class="form-control" id="username" placeholder="Ingresa tu email" required>
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Ingresa tu clave de acceso" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const URL = "http://localhost:8080/api";
+        const select = document.getElementById("roles");
+        const fUsers = document.getElementById("fUsers");
+
+        fUsers.addEventListener("submit", (evt) => {
+            evt.preventDefault();
+            let data = {
+                email: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+            fetch( URL + '/users/login', {
+                method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}
+            } )
+                .then( resp => resp.json() )
+                .then( resp =>  {
+                    let menu = resp.roles[0].menu;
+
+                    localStorage.setItem("user", resp);
+                    localStorage.setItem("menu", menu);
+                })
+                .catch( resp => alert(resp) );
+        });
+    </script>
+</body>
+</html>
+
+
+

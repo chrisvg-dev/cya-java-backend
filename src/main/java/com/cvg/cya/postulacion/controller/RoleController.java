@@ -58,7 +58,7 @@ public class RoleController {
             return ResponseEntity.status(HttpStatus.CREATED).body(this.roleService.save(newRol));
         } catch (NoSuchElementException e){
             return ResponseEntity.badRequest().body(
-                    Collections.singletonMap(MESSAGE, "Debes registrar un rol válido...")
+                    Collections.singletonMap(MESSAGE, "Debes registrar un rol válido -> " + e.getMessage())
             );
         }
     }

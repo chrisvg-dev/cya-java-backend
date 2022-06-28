@@ -16,14 +16,19 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_rol", referencedColumnName = "id")
-    private Role roles;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_rol",
+            joinColumns = @JoinColumn(name = "fk_rol", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_user", referencedColumnName = "id"),
+            uniqueConstraints = { @UniqueConstraint(columnNames = {"fk_rol", "fk_user"}) }
+    )
+    private Set<Role> roles;
 
     @NotBlank
     private String name;

@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class UserDto {
     private Long id;
     @NotNull
-    private Long rol;
+    private Set<Long> roles;
     @NotBlank
     private String name;
     @NotBlank
