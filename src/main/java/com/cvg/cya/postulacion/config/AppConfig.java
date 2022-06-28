@@ -75,7 +75,6 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
     }
 
     class LoginPageFilter extends GenericFilterBean {
-
         @Override
         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
             if (
