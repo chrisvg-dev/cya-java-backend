@@ -24,7 +24,4 @@ public class UserMenu {
     @NotBlank
     @Column(unique = true)
     private String path;
-
-    @NotNull
-    private Boolean status;
 }

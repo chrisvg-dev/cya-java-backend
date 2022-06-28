@@ -16,6 +16,4 @@ public class MenuDto {
     private String name;
     @NotBlank
     private String path;
-    @NotNull
-    private Boolean status;
 }

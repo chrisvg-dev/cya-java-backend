@@ -33,7 +33,6 @@ public class MenuController {
         UserMenu menu = new UserMenu();
         menu.setName( menuDto.getName() );
         menu.setPath( menuDto.getPath() );
-        menu.setStatus( menuDto.getStatus() );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(this.menuService.save(menu));
     }

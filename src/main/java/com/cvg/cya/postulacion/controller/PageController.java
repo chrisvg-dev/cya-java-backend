@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/app")
 public class PageController {
 
     private final UserService userService;
@@ -21,6 +20,10 @@ public class PageController {
     @GetMapping("/login")
     public String login() {
         return "auth/login";
+    }
+    @GetMapping("/menu")
+    public String menu() {
+        return "dashboard/menu";
     }
     @GetMapping("/register")
     public String register() {

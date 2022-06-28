@@ -16,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-//@EnableWebSecurity
-public class AppConfig /**extends **/ {
-    //@Autowired private UserServiceImpl userService;
+@EnableWebSecurity
+public class AppConfig extends WebSecurityConfigurerAdapter {
+    @Autowired private UserServiceImpl userService;
 
     /**
      * DEFINIMOS EL BEAN PARA PODER INYECTAR PASSWORD ENCODER CON EL HASH BCRYPT Y ASIGNARSELO A LA CLAVE DE AUTENTICACION
@@ -29,7 +29,7 @@ public class AppConfig /**extends **/ {
         return new BCryptPasswordEncoder();
     }
 
-    /**
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -54,7 +54,7 @@ public class AppConfig /**extends **/ {
                 .antMatchers(HttpMethod.GET, "/api/roles").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/app/login").permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
@@ -62,5 +62,5 @@ public class AppConfig /**extends **/ {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
-    }*/
+    }
 }

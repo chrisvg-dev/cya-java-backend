@@ -20,10 +20,10 @@ public class PostulacionApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		List<UserMenu> menu = Arrays.asList(
-				new UserMenu(0L, "USERS", "/users", true),
-				new UserMenu(0L, "ROLES", "/roles", true),
-				new UserMenu(0L, "HOME", "/home", true),
-				new UserMenu(0L, "MENU", "/menu", true)
+				new UserMenu(0L, "USERS", "/users"),
+				new UserMenu(0L, "ROLES", "/roles"),
+				new UserMenu(0L, "HOME", "/home"),
+				new UserMenu(0L, "MENU", "/menu")
 		);
 
 	}
