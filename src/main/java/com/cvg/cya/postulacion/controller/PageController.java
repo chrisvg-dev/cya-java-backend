@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PageController {
-
     private final UserService userService;
 
     public PageController(UserService userService) {
