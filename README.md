@@ -2,6 +2,7 @@
 
 Necesitas tener lo siguiente instalado.
 > Docker
+> 
 > Docker compose (en Windows se instala con docker desktop)
 
 La aplicación está configurada para poder ejecutarse con docker, lo único que debes hacer es lo siguiente:
