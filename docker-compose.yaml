@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres-standalone:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cya_3
+    ports:
+      - '5433:5433'
+    networks:
+      app:
+  springapp:
+    depends_on:
+      - postgres-standalone
+    image: app_01
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-standalone/cya_3
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "postgres"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    networks:
+      app:
+networks:
+  app:
