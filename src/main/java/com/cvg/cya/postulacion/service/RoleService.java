@@ -12,4 +12,5 @@ public interface RoleService {
     List<Role> findAll();
     void deleteById(Long id);
     boolean existsByRolName(String rolName);
+    Optional<Role> findByRolName(String rolName);
 }

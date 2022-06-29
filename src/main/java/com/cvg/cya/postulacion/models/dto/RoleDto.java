@@ -14,7 +14,6 @@ import java.util.Set;
 public class RoleDto {
     @NotBlank
     private String roleName;
-
-    @NotNull(message = "El menu no debe ser null")
+    @NotNull(message = "Debe seleccionar un menu para este usuario")
     private Set<Long> menu;
 }

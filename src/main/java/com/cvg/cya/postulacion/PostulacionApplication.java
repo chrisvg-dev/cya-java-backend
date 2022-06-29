@@ -16,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ErrorMvcAutoConfiguration.class})
 public class PostulacionApplication implements CommandLineRunner {
 	private static final Logger LOG = LoggerFactory.getLogger( PostulacionApplication.class );
 	private final MenuRepository menuService;
@@ -55,27 +57,40 @@ public class PostulacionApplication implements CommandLineRunner {
 		this.sessionRepository.save(session);
 
 		List<UserMenu> menu = Arrays.asList(
+				new UserMenu(0L, "home", "/home"),
+				new UserMenu(0L, "c&a", "/"),
 				new UserMenu(0L, "users", "/users"),
 				new UserMenu(0L, "roles", "/roles"),
 				new UserMenu(0L, "menu", "/menu"),
-				new UserMenu(0L, "home", "/home"),
-				new UserMenu(0L, "c&a", "/")
+				new UserMenu(0L, "sesion", "/sesion")
 		);
 		this.menuService.saveAll( menu );
 
-		Role role = new Role(0L, "ADMIN", this.menuService.findAll().stream().collect(Collectors.toSet()));
-		Role saved = this.roleService.save(role);
+		List<Role> roles = Arrays.asList(
+				new Role(0L, "ADMIN", this.menuService.findAll().stream().collect(Collectors.toSet())),
+				new Role(0L, "BASIC", this.menuService.findAll().stream().filter(item -> item.getId() < 3).collect(Collectors.toSet()))
+		);
+		List<Role> rolesSaved = this.roleService.saveAll(roles);
+
 
 		/**
 		 * DEFAULT
 		 */
 		LocalDateTime now = LocalDateTime.now();
-		Set<Role> roles = new HashSet<>();
-		roles.add(saved);
+		Set<Role> adminRoles = new HashSet<>();
+		adminRoles.add(rolesSaved.get(0));
+
+		LOG.info( adminRoles.toString() );
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode("12345");
-		User user = new User(0L, roles, "CRISTHIAN", "VILLEGAS GARCIA", "admin@admin.com", encodedPassword, now);
+		User user = new User(
+				0L,
+				adminRoles,
+				"CRISTHIAN",
+				"VILLEGAS GARCIA",
+				"admin@admin.com", encodedPassword, "parangamicutirimicuaro",
+				now);
 		this.userService.save(user);
 
 		/**

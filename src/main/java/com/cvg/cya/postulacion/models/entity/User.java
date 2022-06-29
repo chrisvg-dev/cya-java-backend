@@ -40,6 +40,8 @@ public class User {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    private String safetyWord;
     @NotNull
     private LocalDateTime createdAt;
 }

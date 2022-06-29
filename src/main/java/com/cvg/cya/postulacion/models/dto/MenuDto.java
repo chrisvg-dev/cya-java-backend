@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class MenuDto {
     private Long id;
-    @NotBlank
+    @NotBlank(message = "El nombre del menu no debe estar en blanco")
     private String name;
-    @NotBlank
+    @NotBlank(message = "El path no debe estar en blanco")
     private String path;
 }

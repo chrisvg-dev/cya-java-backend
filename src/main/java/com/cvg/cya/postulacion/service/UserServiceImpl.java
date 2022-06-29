@@ -100,7 +100,8 @@ public class UserServiceImpl implements UserService {
                 user.getName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword() );
+                user.getPassword(),
+                user.getSafetyWord());
         LOG.info( userPrincipal.getAuthorities().toString() );
         return userPrincipal;
     }

@@ -1,6 +1,5 @@
 package com.cvg.cya.postulacion.controller;
 
-import com.cvg.cya.postulacion.models.dto.LoginDto;
 import com.cvg.cya.postulacion.models.dto.UserDto;
 import com.cvg.cya.postulacion.models.entity.Role;
 import com.cvg.cya.postulacion.models.entity.User;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,7 +56,6 @@ public class UserController {
         if ( existsByEmail ) return ResponseEntity.badRequest().body(
                 Collections.singletonMap("message", "El email ya esta registrado...")
         );
-        LOG.info( dto.getRoles().isEmpty() + "" );
         if ( dto.getRoles().isEmpty() && dto.getRoles().size() > 0 ) return ResponseEntity.badRequest().body(
                 Collections.singletonMap("message", "Debe agregar roles al usuario...")
         );
@@ -68,16 +64,45 @@ public class UserController {
                 .map( item -> this.roleService.findById(item).orElseThrow() )
                 .collect(Collectors.toSet());
 
+        return getPreparedUser(dto, roles);
+    }
+    @PostMapping("/basic")
+    public ResponseEntity<?> saveBasic(@Valid @RequestBody UserDto dto, BindingResult result) {
+        LOG.info( dto.toString() );
+
+        if (result.hasErrors()) return Resources.validate(result);
+
+        boolean existsByEmail = this.userService.existsByEmail( dto.getEmail() );
+        if ( existsByEmail ) return ResponseEntity.badRequest().body(
+                Collections.singletonMap("message", "El email ya esta registrado...")
+        );
+
+        boolean existsByRolName = this.roleService.existsByRolName("BASIC");
+        LOG.info( existsByRolName + "" );
+        if ( !existsByRolName ) return ResponseEntity.badRequest().body(
+                Collections.singletonMap("message", "Ha ocurrido un problema al intentar registrar. Intenta nuevamente.")
+        );
+
+        Optional<Role> roleOptional = this.roleService.findByRolName("BASIC");
+        Set<Role> roles = new HashSet<>();
+        roles.add( roleOptional.orElseThrow() );
+
+        return getPreparedUser(dto, roles);
+    }
+
+    private ResponseEntity<?> getPreparedUser(@RequestBody @Valid UserDto dto, Set<Role> roles) {
         User user = new User();
         user.setRoles( roles );
         user.setName( dto.getName() );
         user.setLastName( dto.getLastName() );
         user.setEmail( dto.getEmail() );
         user.setPassword( this.passwordEncoder.encode( dto.getPassword() ) );
+        user.setSafetyWord( dto.getSafetyWord() );
         user.setCreatedAt( LocalDateTime.now() );
 
         return ResponseEntity.status(HttpStatus.CREATED).body( this.userService.save(user) );
     }
+
 
     /**@PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto dto, BindingResult result) {

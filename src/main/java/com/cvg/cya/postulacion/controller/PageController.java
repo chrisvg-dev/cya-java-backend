@@ -3,6 +3,7 @@ package com.cvg.cya.postulacion.controller;
 import com.cvg.cya.postulacion.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
@@ -36,6 +37,10 @@ public class PageController {
     @GetMapping({"/", "/home"})
     public String home() {
         return "dashboard/home";
+    }
+    @RequestMapping("/sesion")
+    public String error() {
+        return "dashboard/session.template";
     }
 
 }

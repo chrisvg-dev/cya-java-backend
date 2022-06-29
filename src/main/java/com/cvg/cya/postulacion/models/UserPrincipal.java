@@ -19,6 +19,7 @@ public class UserPrincipal implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    private String safetyWord;
 
     public UserPrincipal(
             Collection<? extends GrantedAuthority> authorities,
@@ -26,13 +27,22 @@ public class UserPrincipal implements UserDetails {
             String name,
             String lastName,
             String email,
-            String password) {
+            String password, String safetyWord) {
         this.authorities = authorities;
         this.menu = menu;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.safetyWord = safetyWord;
+    }
+
+    public String getSafetyWord() {
+        return safetyWord;
+    }
+
+    public void setSafetyWord(String safetyWord) {
+        this.safetyWord = safetyWord;
     }
 
     public Set<UserMenu> getMenu() {

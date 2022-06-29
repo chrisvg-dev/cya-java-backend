@@ -68,12 +68,31 @@
                     <input type="password" class="form-control" id="password" placeholder="Ingresa la contraseña" required>
                     <div class="form-text">We'll never share your password with anyone else.</div>
                 </div>
-                <div class="mb-3" id="roles"> </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="safetyWord" placeholder="Ingresa una palabra secreta" required>
+                    <div class="form-text">We'll never share your safetyWord with anyone else.</div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
 </div>
 <script th:src="@{/js/register.js}"></script>
+<script>
+    const fUsers = document.getElementById("fUsers");
+    fUsers.addEventListener("submit", (evt) => {
+        evt.preventDefault();
+        const data = {
+            roles: [0],
+            name: document.getElementById('name').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            safetyWord: document.getElementById('safetyWord').value
+        };
+        sendRequest('/users/basic', data);
+    });
+</script>
 </body>
 </html>
 

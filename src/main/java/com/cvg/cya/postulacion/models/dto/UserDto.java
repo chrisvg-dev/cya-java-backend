@@ -19,8 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Debe seleccionar un rol para este usuario")
+    @NotEmpty(message = "Debe seleccionar un rol para este usuario")
     private Set<Long> roles;
     @NotBlank
     private String name;
@@ -32,4 +32,6 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    private String safetyWord;
 }
