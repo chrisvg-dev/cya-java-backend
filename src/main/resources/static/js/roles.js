@@ -18,22 +18,43 @@ const loadMenu = () => {
 };
 loadMenu();
 
+const deleteRole = (roleId) => {
+    if (confirm("¿Está seguro de esta acción?")){
+        fetch( `${URL}/roles/delete/${roleId}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}} )
+            .then( data => data.json() ).then( data => {
+            loadRoles();
+            if ( data.status == 500 ) {
+                alert("Necesita borrar a los usuarios que tienen asignado este rol.");
+            } else {
+                alert(data.message);
+            }
+            console.log(data);
+        }).catch(err => console.log(err));
+    }
+};
+
 const loadRoles = () => {
     fetch( URL + '/roles' ).then( data => data.json() )
         .then( data => {
-            roles.innerHTML = '';
-            data.forEach(item => {
-                let option = `<tr>\
-                        <td>${item.id}</td>\
-                        <td>${item.rolName}</td>\
-                    </tr>`;
-                roles.innerHTML += option;
+            tblRoles.innerHTML = '';
+            data.forEach(rol => {
+                let row = `<div class="alert alert-primary mt-1" role="alert"> El rol tiene el nombre ${rol.rolName}</div>\
+                        <div class="media text-muted pt-3 mb-3">\
+                        <button class="btn btn-danger btn-sm" style="float: right" onclick="deleteRole(${rol.id})" >Eliminar</button>\
+                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">\
+                            <strong class="d-block text-gray-dark">La lista de menú de este rol es la siguiente: </strong>`;
+                let menu = `<nav aria-label="breadcrumb"> <ol class="breadcrumb">`;
+                rol.menu.forEach(item => {
+                    menu += `<li class="breadcrumb-item"><a href="${item.path}">${item.name}</a></li>`;
+                });
+                menu += ` </ol></nav>`;
+                row += menu;
+                row += `</p></div><br>`;
+
+                tblRoles.innerHTML += row;
             });
         }).catch(err => console.log(err));
 };
-
-//loadRoles();
-
 
 fRoles.addEventListener("submit", (evt) => {
     evt.preventDefault();
@@ -48,7 +69,12 @@ fRoles.addEventListener("submit", (evt) => {
         .then( resp => resp.json() )
         .then( resp => {
             console.log(resp);
-            toastr.success(JSON.stringify(resp));
+            if (resp.id > 0 ) {
+                toastr.success( `Se ha registrado al usuario con el id: ${resp.id}` );
+                loadRoles();
+            } else {
+                toastr.info( JSON.stringify(resp) );
+            }
             loadRoles();
         } )
         .catch( resp => {

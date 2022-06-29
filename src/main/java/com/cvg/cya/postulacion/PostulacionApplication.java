@@ -1,13 +1,7 @@
 package com.cvg.cya.postulacion;
 
-import com.cvg.cya.postulacion.models.entity.Role;
-import com.cvg.cya.postulacion.models.entity.Session;
-import com.cvg.cya.postulacion.models.entity.User;
-import com.cvg.cya.postulacion.models.entity.UserMenu;
-import com.cvg.cya.postulacion.models.repository.MenuRepository;
-import com.cvg.cya.postulacion.models.repository.RoleRepository;
-import com.cvg.cya.postulacion.models.repository.SessionRepository;
-import com.cvg.cya.postulacion.models.repository.UserRepository;
+import com.cvg.cya.postulacion.models.entity.*;
+import com.cvg.cya.postulacion.models.repository.*;
 import com.cvg.cya.postulacion.service.MenuService;
 import com.cvg.cya.postulacion.service.RoleService;
 import com.cvg.cya.postulacion.service.UserService;
@@ -32,19 +26,21 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ErrorMvcAutoConfiguration.class})
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class PostulacionApplication implements CommandLineRunner {
 	private static final Logger LOG = LoggerFactory.getLogger( PostulacionApplication.class );
 	private final MenuRepository menuService;
 	private final RoleRepository roleService;
 	private final UserRepository userService;
 	private final SessionRepository sessionRepository;
+	private final DisplayRepository displayRepository;
 
-	public PostulacionApplication(MenuRepository menuService, RoleRepository roleService, UserRepository userService, SessionRepository sessionRepository) {
+	public PostulacionApplication(MenuRepository menuService, RoleRepository roleService, UserRepository userService, SessionRepository sessionRepository, DisplayRepository displayRepository) {
 		this.menuService = menuService;
 		this.roleService = roleService;
 		this.userService = userService;
 		this.sessionRepository = sessionRepository;
+		this.displayRepository = displayRepository;
 	}
 
 	public static void main(String[] args) {
@@ -53,12 +49,20 @@ public class PostulacionApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		/**
+		 * CONFIGURACIONES POR DEFECTO-------------------------------------
+		 */
+		Display display = new Display(0L, "Buenas tardes C&A");
+		this.displayRepository.save(display);
+
 		Session session = new Session(0L, 60);
 		this.sessionRepository.save(session);
+		/**
+		 * ------------------------------------------------------------------
+		 */
 
 		List<UserMenu> menu = Arrays.asList(
-				new UserMenu(0L, "home", "/home"),
-				new UserMenu(0L, "c&a", "/"),
+				new UserMenu(0L, "c&a", "/cya"),
 				new UserMenu(0L, "users", "/users"),
 				new UserMenu(0L, "roles", "/roles"),
 				new UserMenu(0L, "menu", "/menu"),

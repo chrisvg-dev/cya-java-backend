@@ -20,6 +20,10 @@
   <h1 class="display-5 fw-bold">Configura el tiempo de las sesiones</h1>
   <div class="col-lg-6 mx-auto">
     <p class="lead mb-4"> Las sesiones tienen un tiempo por defecto que soporta 60 segundos de inactividad, si quieres modificar ese tiempo utiliza el campo de texto. </p>
+
+    <div th:text="'La configuración por defecto es de ' + ${session.duration} + ' segundos'" class="alert alert-danger" role="alert"></div>
+    <div id="sessionTime" class="alert alert-danger" role="alert"></div>
+
     <form id="fDuration" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
       <input type="number" class="form-control px-4 gap-3" id="txtDuration" placeholder="Tiempo de sesión" required>
       <button type="submit" id="updateDuration" class="btn btn-outline-secondary btn-lg px-4">Guardar</button>
@@ -31,6 +35,16 @@
   const URL = 'http://localhost:8080/api';
   const txtDuration = document.getElementById("txtDuration");
   const fDuration = document.getElementById("fDuration");
+  const sessionTime = document.getElementById("sessionTime");
+
+  const loadDefaultDuration = () => {
+    fetch( URL + '/session/currentDuration' ).then( data => data.json() ).then( data => {
+      sessionTime.innerText = `La configuración actual es de ${data.duration} segundos`;
+    }).catch(err => console.log(err));
+  };
+
+  loadDefaultDuration();
+
   fDuration.addEventListener("submit", (evt) => {
     evt.preventDefault();
     let data = { duration: parseInt(txtDuration.value)};
@@ -46,6 +60,8 @@
               console.log(resp)
               if (resp.id > 0 ) {
                 toastr.success(`La nueva duración de las sesiones es de ${resp.duration} segundos`);
+                //window.location.reload();
+                loadDefaultDuration();
               } else {
                 toastr.success( JSON.stringify(resp) );
               }

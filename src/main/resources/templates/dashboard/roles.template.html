@@ -36,15 +36,23 @@
                     <tbody id="menu"></tbody>
                 </table>
                 <div class="mb-3">
-                    <input class="btn btn-primary"  type="submit">
+                    <input class="btn btn-primary"  type="submit" value="Guardar">
                 </div>
             </form>
-            <hr>
+
+            <hr><div class="my-4">
+                <h2>Lista de roles</h2>
+                <div class="my-3 p-3 bg-white rounded box-shadow" id="tblRoles"> </div>
+            </div>
         </div>
+
     </div>
+
 </div>
 <script th:src="@{/js/roles.js}"></script>
-
+<script>
+    loadRoles();
+</script>
 </body>
 </html>
 

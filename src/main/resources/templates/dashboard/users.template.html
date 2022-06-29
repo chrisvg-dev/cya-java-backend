@@ -12,6 +12,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/users.css}">
     <style>
         .form-group {
             margin-bottom: 1em;
@@ -21,49 +22,53 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
 <header th:replace="menu::header"></header>
 <div class="px-4 py-5 my-5">
-    <img class="d-block mx-auto mb-4"
-         src="https://ii.ct-stc.com/2/logos/empresas/2018/03/13/ca-systems-sa-de-cv-3B6714E8C1A71FD9233959044thumbnail.png"
-         alt="" style="width: 200px">
 
-    <div class="col-lg-6 mx-auto">
-        <h1 class="display-5 fw-bold">Nuevo usuario</h1>
-        <form id="fUsers" method="post">
-            <div class="mb-3">
-                <input class="form-control" type="text" placeholder="Ingresa el nombre" id="name" required>
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="text" placeholder="Ingresa el apellido" id="lastName" required>
-            </div>
-            <div class="mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Ingresa el email" required>
-                <div class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <input type="password" class="form-control" id="password" placeholder="Ingresa la contraseña" required>
-                <div class="form-text">We'll never share your password with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <input type="password" class="form-control" id="safetyWord" placeholder="Ingresa una palabra secreta" required>
-                <div class="form-text">We'll never share your safetyWord with anyone else.</div>
-            </div>
-            <div class="mb-3" id="roles"> </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="container">
+            <h1 class="display-5 fw-bold">Nuevo usuario</h1>
+        <div class="col-md-12 col-lg-5 mb-12">
+            <form id="fUsers" method="post">
+                <div class="mb-3">
+                    <input class="form-control" type="text" placeholder="Ingresa el nombre" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" placeholder="Ingresa el apellido" id="lastName" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" placeholder="Ingresa el email" required>
+                    <div class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Ingresa la contraseña" required>
+                    <div class="form-text">We'll never share your password with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="safetyWord" placeholder="Ingresa una palabra secreta" required>
+                    <div class="form-text">We'll never share your safetyWord with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <select name="roles" id="roles" class="form-select" required>
+                        <option value="" disabled selected>Selecciona un rol</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="my-3 p-3 bg-white rounded box-shadow" id="tblUsers"> </div>
     </div>
 </div>
 <script th:src="@{/js/register.js}"></script>
 <script>
     const fUsers = document.getElementById("fUsers");
     loadRoles();
+    loadUsers(tblUsers);
     fUsers.addEventListener("submit", (evt) => {
         evt.preventDefault();
-        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-        let selected = Array.from(checked).map(x => parseInt(x.value));
         const data = {
-            roles: selected,
+            roles: [ parseInt(document.getElementById('roles').value) ],
             name: document.getElementById('name').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,

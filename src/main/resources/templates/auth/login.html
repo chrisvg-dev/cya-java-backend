@@ -82,38 +82,8 @@
                 </div>
             </div>
         </form>
-        <div class="form-group">
-            <span>Crea una cuenta <a th:href="@{/register}">aquí</a></span>
-        </div>
-
     </div>
 </div>
 <script th:src="@{/js/app.js}"></script>
-<script>
-    /**
-    const URL = "http://localhost:8080/api";
-    const select = document.getElementById("roles");
-    const fUsers = document.getElementById("fUsers");
-
-    fUsers.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-        let data = {
-            email: document.getElementById('username').value,
-            password: document.getElementById('password').value
-        };
-        fetch( URL + '/users/login', {
-            method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}
-        } )
-            .then( resp => resp.json() )
-            .then( resp =>  {
-                let menu = resp.roles[0].menu;
-                localStorage.setItem("user", JSON.stringify(resp));
-                localStorage.setItem("menu", JSON.stringify(menu));
-
-                window.location = '/app';
-            })
-            .catch( resp => alert(resp) );
-    });*/
-</script>
 </body>
 </html>

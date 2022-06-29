@@ -56,4 +56,9 @@ public class RoleServiceImpl implements RoleService {
     public Optional<Role> findByRolName(String rolName) {
         return this.repository.findByRolName(rolName);
     }
+
+    @Override
+    public void deleteAllReferences(Long rolId) {
+        this.repository.eliminarAllReferences(rolId);
+    }
 }

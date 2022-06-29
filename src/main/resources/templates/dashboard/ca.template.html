@@ -1,0 +1,24 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header th:replace="menu::header"></header>
+<div class="px-4 py-5 my-5 text-center">
+  <img class="d-block mx-auto mb-4"
+       src="https://ii.ct-stc.com/2/logos/empresas/2018/03/13/ca-systems-sa-de-cv-3B6714E8C1A71FD9233959044thumbnail.png"
+       alt="" style="width: 200px">
+  <h1 th:text="${session.message}" class="display-5 fw-bold"></h1>
+  <div class="col-lg-6 mx-auto">  </div>
+</div>
+</body>
+</html>
+
+
+

@@ -41,6 +41,32 @@ public class UserController {
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok( this.userService.findAll() );
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<User> userOptional = this.userService.findById(id);
+        try {
+            if (userOptional.isPresent()) {
+                User user = userOptional.orElseThrow();
+
+                if (user.getId() == 1L) return ResponseEntity.badRequest().body(
+                        Collections.singletonMap("message", "No puede eliminar a este usuario.")
+                );
+
+                this.userService.deleteById(user.getId());
+                return ResponseEntity.ok().body(
+                        Collections.singletonMap("message", "Usuario eliminado...")
+                );
+            }
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("message", "El usuario no ha sido encontrado.")
+            );
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("message", "El usuario no ha sido encontrado.")
+            );
+        }
+    }
     /**
      *
      * POST
@@ -56,7 +82,7 @@ public class UserController {
         if ( existsByEmail ) return ResponseEntity.badRequest().body(
                 Collections.singletonMap("message", "El email ya esta registrado...")
         );
-        if ( dto.getRoles().isEmpty() && dto.getRoles().size() > 0 ) return ResponseEntity.badRequest().body(
+        if ( dto.getRoles().isEmpty() || dto.getRoles().stream().anyMatch( item -> item == 0 )) return ResponseEntity.badRequest().body(
                 Collections.singletonMap("message", "Debe agregar roles al usuario...")
         );
 
@@ -103,29 +129,4 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body( this.userService.save(user) );
     }
 
-
-    /**@PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDto dto, BindingResult result) {
-        try {
-            if (result.hasErrors()) return Resources.validate(result);
-
-            String passwordEncoded = passwordEncoder.encode(dto.getPassword());
-            boolean exists = this.userService.existsByEmail(dto.getEmail());
-            if (!exists) return ResponseEntity.badRequest().body(
-                    Collections.singletonMap("message", "El usuario no existe")
-            );
-            User user = this.userService.findByEmail( dto.getEmail()).orElseThrow();
-
-            if ( !(passwordEncoder.matches(dto.getPassword(), user.getPassword())) )
-                return ResponseEntity.badRequest().body(
-                    Collections.singletonMap("message", "La contraseña es incorrecta")
-                );
-
-            return ResponseEntity.status(HttpStatus.CREATED).body( user );
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.badRequest().body(
-                    Collections.singletonMap("message", e.getMessage())
-            );
-        }
-    }*/
 }
