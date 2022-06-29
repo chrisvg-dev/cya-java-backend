@@ -62,11 +62,11 @@ public class PostulacionApplication implements CommandLineRunner {
 		 */
 
 		List<UserMenu> menu = Arrays.asList(
-				new UserMenu(0L, "c&a", "/cya"),
-				new UserMenu(0L, "users", "/users"),
-				new UserMenu(0L, "roles", "/roles"),
-				new UserMenu(0L, "menu", "/menu"),
-				new UserMenu(0L, "sesion", "/sesion")
+				new UserMenu(0L, "C&A", "/cya"),
+				new UserMenu(0L, "Users", "/users"),
+				new UserMenu(0L, "Roles", "/roles"),
+				new UserMenu(0L, "Menú", "/menu"),
+				new UserMenu(0L, "Sesión", "/sesion")
 		);
 		this.menuService.saveAll( menu );
 
