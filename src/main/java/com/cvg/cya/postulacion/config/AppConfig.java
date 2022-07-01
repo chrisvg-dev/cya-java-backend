@@ -1,5 +1,6 @@
 package com.cvg.cya.postulacion.config;
 
+import com.cvg.cya.postulacion.filters.LoginPageFilter;
 import com.cvg.cya.postulacion.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +42,6 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -61,12 +60,8 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/register**", "/js/**", "/css/**", "/img/**").permitAll()
-                .antMatchers("/api/menu").permitAll()
                 .antMatchers("/api/users").permitAll()
-                .antMatchers("/api/session**").permitAll()
                 .antMatchers("/api/users/basic").anonymous()
-                .antMatchers("/api/roles").permitAll()
-                .antMatchers("/api/roles/delete/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
@@ -78,20 +73,5 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
-    }
-
-    class LoginPageFilter extends GenericFilterBean {
-        @Override
-        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-            if (
-                    SecurityContextHolder.getContext().getAuthentication() != null &&
-                            SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
-                            ((HttpServletRequest) servletRequest).getRequestURI().equals("/login")
-            ) {
-                LOG.info("attemp login detected but is authenticated... Redirec...");
-                ((HttpServletResponse)servletResponse).sendRedirect("/");
-            }
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
     }
 }

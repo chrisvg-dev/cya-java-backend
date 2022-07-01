@@ -34,7 +34,6 @@ public class PostulacionApplication implements CommandLineRunner {
 	private final UserRepository userService;
 	private final SessionRepository sessionRepository;
 	private final DisplayRepository displayRepository;
-
 	public PostulacionApplication(MenuRepository menuService, RoleRepository roleService, UserRepository userService, SessionRepository sessionRepository, DisplayRepository displayRepository) {
 		this.menuService = menuService;
 		this.roleService = roleService;
@@ -42,11 +41,9 @@ public class PostulacionApplication implements CommandLineRunner {
 		this.sessionRepository = sessionRepository;
 		this.displayRepository = displayRepository;
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(PostulacionApplication.class, args);
 	}
-
 	@Override
 	public void run(String... args) throws Exception {
 		/**

@@ -32,7 +32,6 @@ public class UserController {
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
-
     /**
      *
      * GET
