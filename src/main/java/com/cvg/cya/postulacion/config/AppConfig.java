@@ -26,12 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Duration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @EnableWebSecurity
 public class AppConfig extends WebSecurityConfigurerAdapter {
     private static final Logger LOG = LoggerFactory.getLogger( AppConfig.class );
-    @Autowired private UserService userService;
+    @Lazy @Autowired private UserService userService;
 
     /**
      * DEFINIMOS EL BEAN PARA PODER INYECTAR PASSWORD ENCODER CON EL HASH BCRYPT Y ASIGNARSELO A LA CLAVE DE AUTENTICACION
