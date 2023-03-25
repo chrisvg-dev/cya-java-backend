@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.context.annotation.Lazy;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +18,7 @@ public class PageController {
     private final UserService userService;
     private final DisplayRepository displayRepository;
 
-    public PageController(UserService userService, DisplayRepository displayRepository) {
+    public PageController(@Lazy UserService userService, @Lazy DisplayRepository displayRepository) {
         this.userService = userService;
         this.displayRepository = displayRepository;
     }
