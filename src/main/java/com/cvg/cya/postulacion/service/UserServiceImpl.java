@@ -5,6 +5,7 @@ import com.cvg.cya.postulacion.models.dto.UserDto;
 import com.cvg.cya.postulacion.models.entity.Role;
 import com.cvg.cya.postulacion.models.entity.User;
 import com.cvg.cya.postulacion.models.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,20 +22,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
     private static final Logger LOG = LoggerFactory.getLogger( UserServiceImpl.class );
     /**
-     * DEPENDENCY INYECTION
+     * DEPENDENCY INJECTION
      */
     private final UserRepository repository;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder, RoleService roleService) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
-    }
 
     @Transactional(readOnly = true)
     @Override

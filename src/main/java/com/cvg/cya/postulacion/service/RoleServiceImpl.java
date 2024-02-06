@@ -2,6 +2,7 @@ package com.cvg.cya.postulacion.service;
 
 import com.cvg.cya.postulacion.models.entity.Role;
 import com.cvg.cya.postulacion.models.repository.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,13 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository repository;
-
-    public RoleServiceImpl(RoleRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     @Transactional
