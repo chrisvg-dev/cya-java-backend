@@ -50,7 +50,7 @@ pipeline {
                         docker stop ${DOCKER_IMAGE}
                         docker rm ${DOCKER_IMAGE}
                     fi
-                    docker compose -f spring.docker.yml up -d
+                    docker compose -f spring.docker.yml up -d --force-recreate
                 """
             }
         }
