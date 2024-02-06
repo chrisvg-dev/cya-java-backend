@@ -1,4 +1,4 @@
-const URL = 'http://localhost:9090/api';
+const URL = 'https://cya-postulation-project.cristhianvg.dev/api';
 const menu = document.getElementById("menu");
 const fMenu = document.getElementById("fMenu");
 
