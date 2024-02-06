@@ -1,4 +1,4 @@
-const URL = 'http://localhost:9090/api';
+const URL = 'https://cya-postulation-project.cristhianvg.dev/api';
 const select = document.getElementById("roles");
 const tblUsers = document.getElementById("tblUsers");
 
