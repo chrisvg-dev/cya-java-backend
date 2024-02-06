@@ -51,7 +51,7 @@ pipeline {
                 sh '''#!/bin/bash
                     sudo cp /opt/utils/template /opt/utils/ms-cristhianvg-projects-cya
                     sudo sed -i 's/server_name rpg.cristhianvg.dev/server_name cya-postulation-project.cristhianvg.dev/g' /opt/utils/ms-cristhianvg-projects-cya
-                    sudo sed -i 's|proxy_pass http://localhost:9191;|proxy_pass 9501;|g' /opt/utils/ms-cristhianvg-projects-cya
+                    sudo sed -i 's|proxy_pass http://localhost:9191;|proxy_pass http://localhost:9501;|g' /opt/utils/ms-cristhianvg-projects-cya
                     sudo mv /opt/utils/ms-cristhianvg-projects-cya /etc/nginx/sites-available/ms-cristhianvg-projects-cya
                     sudo ln -sf /etc/nginx/sites-available/ms-cristhianvg-projects-cya /etc/nginx/sites-enabled/ms-cristhianvg-projects-cya
                     sudo ufw allow 9501
