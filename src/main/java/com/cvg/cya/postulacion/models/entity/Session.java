@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "session_config")
+@Table(name = "`session_config`")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
