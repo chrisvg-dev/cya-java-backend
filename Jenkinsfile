@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    /* REMEMBER, YOU MUST CREATE SUBDOMAIN BEFORE EXECUTE THIS PIPELINE */
     environment {
         DOCKER_IMAGE = 'cvillegas92/ms-cristhianvg-projects-cya'
         APP_NAME = 'ms-cristhianvg-projects-cya'
