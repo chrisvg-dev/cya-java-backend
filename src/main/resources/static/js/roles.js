@@ -1,4 +1,5 @@
-const URL = 'https://cya-postulation-project.cristhianvg.dev/api';const roles = document.getElementById("roles");
+const URL = 'https://cya-postulation-project.cristhianvg.dev/api';
+const roles = document.getElementById("roles");
 const menu = document.getElementById("menu");
 const fRoles = document.getElementById("fMenu");
 
