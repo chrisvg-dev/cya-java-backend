@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+  spring-app:
+    container_name: ms-cristhianvg-projects-cya
+    image: cvillegas92/ms-cristhianvg-projects-cya
+    volumes:
+      - spring:/data/spring
+    ports:
+      - "9501:9090"
+    networks:
+      - main-network
+    restart: unless-stopped
+
+networks:
+  main-network:
+    external: true
+volumes:
+  spring:
+  postgres:

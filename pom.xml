@@ -14,7 +14,7 @@
 	<name>postulacion</name>
 	<description>Postulacion para desarrollador web</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -69,6 +69,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>cya_exam</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
